@@ -1,20 +1,23 @@
-# def request_filter_data_to_list(filter_field, filter_string):
-#     # Пробегается по всему списку учеников и возвращает список учеников, удовлетворяющих фильтру
-#     # filter_field, filter_string - списки имен полей, по которым нужно отфильтровать
-#     # и значения этих полей для фильтрации
-#     pupil_list = []
-#     return pupil_list
-#
-# def request_all_data_to_list():
-#     # Возвращает полный список учеников
-#     pupil_list = []
-#     return pupil_list
-#
-# def request_pupil_data(id):
-#     #Возвращает словарь данных по конкретному ученику по его id
-#     pupil_dict = {}
-#     return pupil_dict
+import json
 
-with open('pupils.json', 'r') as file:
-    list_pupils = file
-    print(list_pupils)
+# def request_filter_data_to_list(find_pupil): # Поиск ученика по заданному словарю.
+#     with open('pupils.json', 'r', encoding='utf-8') as file:
+#         list_pupils = json.load(file)
+#
+#     pupil_list = []
+#     return pupil_list
+
+def request_all_data_to_list(): # Возвращает полный список учеников
+    with open('pupils.json', 'r', encoding='utf-8') as file:
+        pupil_list = json.load(file)
+    return pupil_list
+
+def request_pupil_data(id): # Возвращает словарь данных по конкретному ученику по его id
+    with open('pupils.json', 'r', encoding='utf-8') as file:
+        pupil_list = json.load(file)
+    for i in pupil_list:
+        if i["id"] == id:
+            pupil_dict = i
+    return pupil_dict
+
+# print(request_pupil_data(1))
