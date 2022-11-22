@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter.messagebox import showinfo
 from find import request_filter_data_to_list, request_all_data_to_list, request_pupil_data
+from edit import save_data
+from add_delete import pupil_add, pupil_delete
+
 # # При загрузке окна, выводим все данные в список учеников find.
 # request_all_data_to_list() # Возвращает список словарей.
 
@@ -18,13 +21,37 @@ from find import request_filter_data_to_list, request_all_data_to_list, request_
 # # Кнопка добавить делает запрос и получает id нового ученика, заполняет его в поле id, очищает все поля с данными, 
 # # запускает режим редактирования этого нового ученика
 # new_id = pupil_add()
+# pupil_delete(id)
 
 # # Редактирование данных нового ученика пользоваетелем
 # save_data(pupil_dict)
 
 # Список для хранения id учеников
 pupil_id_list = []
+pupil_filter_dict = {"id": "", "ФИО": "", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
 
+# Создание словаря с данными по ученику из текущих данных информационных полей
+def get_pupil_dict():
+    temp_pupil_dict = {"id": "", "ФИО": "", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
+    temp_pupil_dict["id"] = id_textbox.get()
+    temp_pupil_dict["ФИО"] = fio_textbox.get()
+    temp_pupil_dict["Класс"] = class_textbox.get()
+    temp_pupil_dict["Руководитель"] = class_boss_textbox.get()
+    temp_pupil_dict["Успеваемость"] = score_textbox.get()
+    temp_pupil_dict["Год рождения"] = birthday_textbox.get()
+    temp_pupil_dict["Телефон"] = phone_textbox.get()
+    return temp_pupil_dict
+
+# Очистка данных во всех полях
+def textbox_clear_data():
+    id_textbox.delete(0,"end")
+    fio_textbox.delete(0,"end")
+    class_textbox.delete(0,"end")
+    class_boss_textbox.delete(0,"end")
+    score_textbox.delete(0,"end")
+    birthday_textbox.delete(0,"end")
+    phone_textbox.delete(0,"end")
+                        
 # Обработка выбора ученика в ListBox
 def onselect(event):
     global pupil_id_list
@@ -35,6 +62,9 @@ def onselect(event):
         index = int(w.curselection()[0])
         id = pupil_id_list[index]
         pupil_dict = request_pupil_data(id)
+        
+        id_textbox.delete(0,"end")
+        id_textbox.insert(0, pupil_dict["id"])
         
         fio_textbox.config(state = "normal")
         fio_textbox.delete(0,"end")
@@ -67,12 +97,12 @@ def onselect(event):
         phone_textbox.config(state = "readonly")
     
 def save_button_click(event):
+    save_data(get_pupil_dict())
     edit_button.grid()
     add_button.grid()
     delete_button.grid()
     save_button.grid_remove()
     search_button.grid()
-    go_button.grid()
     all_button.grid()
     fio_textbox.config(state = "readonly")
     class_textbox.config(state = "readonly")
@@ -83,10 +113,15 @@ def save_button_click(event):
     pupil_listbox.config(state = NORMAL)
 
 def add_button_click(event):
-    pass
+    # new_id = pupil_add()
+    new_id = 6 
+    textbox_clear_data()
+    id_textbox.insert(0, new_id)
+    edit_button_click(event)
 
 def delete_button_click(event):
-    pass
+    pupil_delete(id_textbox.get())
+    show_all_click()
 
 def edit_button_click(event):
     edit_button.grid_remove()
@@ -94,7 +129,6 @@ def edit_button_click(event):
     delete_button.grid_remove()
     save_button.grid()
     search_button.grid_remove()
-    go_button.grid_remove()
     all_button.grid_remove()
     fio_textbox.config(state = "normal")
     class_textbox.config(state = "normal")
@@ -105,8 +139,39 @@ def edit_button_click(event):
     pupil_listbox.config(state = DISABLED)
 
 def search_button_click(event):
-    pass
+    edit_button.grid_remove()
+    add_button.grid_remove()
+    delete_button.grid_remove()
+    find_button.grid()
+    search_button.grid_remove()
+    all_button.grid_remove()
+    fio_textbox.config(state = "normal")
+    class_textbox.config(state = "normal")
+    class_boss_textbox.config(state = "normal")
+    score_textbox.config(state = "normal")
+    birthday_textbox.config(state = "normal")
+    phone_textbox.config(state = "normal")
+    pupil_listbox.config(state = DISABLED)
+    textbox_clear_data()
 
+def find_button_click(event):
+    filtered_list = request_filter_data_to_list(get_pupil_dict())
+    listbox_fill(filtered_list)
+    edit_button.grid()
+    add_button.grid()
+    delete_button.grid()
+    find_button.grid_remove()
+    search_button.grid()
+    all_button.grid()
+    textbox_clear_data()
+    fio_textbox.config(state = "readonly")
+    class_textbox.config(state = "readonly")
+    class_boss_textbox.config(state = "readonly")
+    score_textbox.config(state = "readonly")
+    birthday_textbox.config(state = "readonly")
+    phone_textbox.config(state = "readonly")
+    pupil_listbox.config(state = NORMAL)
+    
 def show_all_click(event):
     pass
 
@@ -123,6 +188,7 @@ def listbox_fill(pupil_dict):
 def window_init():
     global pupil_listbox
     global pupil_id_list
+    global id_textbox
     global fio_textbox
     global class_textbox
     global class_boss_textbox
@@ -134,7 +200,7 @@ def window_init():
     global edit_button
     global save_button
     global search_button
-    global go_button
+    global find_button
     global all_button
     
     common_font = ("Courier", 14)
@@ -232,11 +298,11 @@ def window_init():
     search_button.configure(bg = "Khaki")
     search_button.grid(column=1, row=8, sticky="news", padx=10, pady=5)
     
-    go_button = Button(root, font=common_font, text = 'Найти')
-    go_button.bind(f'<Button>', search_button_click)
-    go_button.configure(bg = "Khaki")
-    go_button.grid(column=1, row=8, sticky="news", padx=10, pady=5)
-    go_button.grid_remove()
+    find_button = Button(root, font=common_font, text = 'Найти')
+    find_button.bind(f'<Button>', find_button_click)
+    find_button.configure(bg = "Khaki")
+    find_button.grid(column=1, row=8, sticky="news", padx=10, pady=5)
+    find_button.grid_remove()
     
     all_button = Button(root, font=common_font, text = 'Показать всех')
     all_button.bind(f'<Button>', show_all_click)
