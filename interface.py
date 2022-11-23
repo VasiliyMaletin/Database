@@ -181,7 +181,6 @@ def search_button_click(event):
 
 def find_button_click(event):
     filtered_list = request_filter_data_to_list(get_pupil_dict())
-    listbox_fill(filtered_list)
     edit_button.grid()
     add_button.grid()
     delete_button.grid()
@@ -196,8 +195,8 @@ def find_button_click(event):
     birthday_textbox.config(state="readonly")
     phone_textbox.config(state="readonly")
     pupil_listbox.config(state=NORMAL)
-    
-    
+    listbox_fill(filtered_list)
+
 def show_all_click(event):
     listbox_fill(request_all_data_to_list())
 
@@ -206,7 +205,7 @@ def listbox_fill(cur_pupil_dict):
     global pupil_listbox
     global pupil_id_list
     
-    pupil_listbox.delete(0,'end')
+    pupil_listbox.delete(0, 'end')
     pupil_id_list = []
     for i in range(len(cur_pupil_dict)):
         pupil_id_list.append(cur_pupil_dict[i]["id"])
