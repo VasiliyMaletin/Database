@@ -14,8 +14,8 @@ def request_filter_data_to_list(find_pupil): # Поиск ученика по з
                     check = 0
                     continue
 
-            if check == 1:
-                pupil_list.append(i)
+        if check == 1:
+            pupil_list.append(i)
     return pupil_list
 
 def request_all_data_to_list(): # Возвращает полный список учеников
@@ -30,3 +30,7 @@ def request_pupil_data(id): # Возвращает словарь данных �
         if i["id"] == id:
             pupil_dict = i
     return pupil_dict
+
+user_dict = {"id": "", "ФИО": "Иванов", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
+
+print(request_filter_data_to_list(user_dict))
