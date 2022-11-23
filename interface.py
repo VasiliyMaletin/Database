@@ -129,7 +129,7 @@ def save_button_click(event):
     birthday_textbox.config(state="readonly")
     phone_textbox.config(state="readonly")
     pupil_listbox.config(state=NORMAL)
-    show_all_click()
+    show_all_click("")
 
 
 def add_button_click(event):
