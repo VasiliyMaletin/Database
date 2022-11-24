@@ -1,4 +1,5 @@
 import json
+from logs import add_log
 
 def pupil_add():
     with open('pupils.json', 'r', encoding='utf-8') as file:
@@ -21,6 +22,7 @@ def pupil_delete(id):
 
     with open('pupils.json', 'w', encoding='utf-8') as file:
         json.dump(list_pupils, file, ensure_ascii=False)
+    add_log(f'Ученик с id {id} был удален')
 
 
         
