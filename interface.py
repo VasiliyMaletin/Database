@@ -36,8 +36,8 @@ pupil_filter_dict = {"id": "", "ФИО": "", "Класс": "", "Руководи
 
 # Создание словаря с данными по ученику из текущих данных информационных полей
 def get_pupil_dict():
-    temp_pupil_dict  =  {"id": "", "ФИО": "", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
-    temp_pupil_dict["id"] = id_textbox.get()
+    temp_pupil_dict  =  {"id": 0, "ФИО": "", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
+    temp_pupil_dict["id"] = int(id_textbox.get())
     temp_pupil_dict["ФИО"] = fio_textbox.get()
     temp_pupil_dict["Класс"] = class_textbox.get()
     temp_pupil_dict["Руководитель"] = class_boss_textbox.get()
@@ -121,13 +121,12 @@ def save_button_click(event):
 
 def add_button_click(event):
     new_id = pupil_add()
+    edit_button_click(event)
     textbox_clear_data()
     id_textbox.insert(0, new_id)
-    edit_button_click(event)
-
 
 def delete_button_click(event):
-    pupil_id_delete = id_textbox.get()
+    pupil_id_delete = int(id_textbox.get())
     pupil_delete(pupil_id_delete)
     show_all_click("")
 

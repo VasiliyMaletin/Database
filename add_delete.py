@@ -8,7 +8,7 @@ def pupil_add():
         if pupil["id"] > max:
             max = pupil["id"] 
             new_id = max + 1
-        return new_id
+    return new_id
 
 
 def pupil_delete(id):
