@@ -1,7 +1,28 @@
+import json
+
 def pupil_add():
-    # Находит максимальный существующий id ученика, прибавляет 1 и возвращает этот новый id 
-    return new_id
+    with open('pupils.json', 'r', encoding='utf-8') as file:
+        list_pupils = json.load(file)
+    max = 0
+    for pupil in list_pupils:
+        if pupil["id"] > max:
+            max = pupil["id"] 
+            new_id = max + 1
+        return new_id
+
 
 def pupil_delete(id):
-    # Удаляет запись по ученику по переданному id
-    add_log(f"Удалена запись {id}")
+    with open('pupils.json', 'r', encoding='utf-8') as file:
+        list_pupils = json.load(file)
+    for i in range(len(list_pupils)):
+        if list_pupils[i]['id'] == id:
+            list_pupils.pop(i)
+            break
+
+    with open('pupils.json', 'w', encoding='utf-8') as file:
+        json.dump(list_pupils, file, ensure_ascii=False)
+
+
+        
+
+   
