@@ -7,14 +7,15 @@ def request_filter_data_to_list(find_pupil): # Поиск ученика по з
     for i in list_pupils:
         check = 0
         for j in find_pupil:
-            if find_pupil[j] != "" and find_pupil[j] in i[j]:
-                check = 1
-            else:
-                check = 0
-                continue
+            if find_pupil[j] != "":
+                if find_pupil[j] in i[j]:
+                    check = 1
+                else:
+                    check = 0
+                    continue
 
-            if check == 1:
-                pupil_list.append(i)
+        if check == 1:
+            pupil_list.append(i)
     return pupil_list
 
 def request_all_data_to_list(): # Возвращает полный список учеников

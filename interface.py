@@ -29,28 +29,15 @@ from add_delete import pupil_add, pupil_delete
 # Список для хранения id учеников
 global pupil_listbox
 global pupil_id_list
-global id_textbox
-global fio_textbox
-global class_textbox
-global class_boss_textbox
-global score_textbox
-global birthday_textbox
-global phone_textbox
-global add_button
-global delete_button
-global edit_button
-global save_button
-global search_button
-global find_button
-global all_button
+
 
 pupil_id_list = []
 pupil_filter_dict = {"id": "", "ФИО": "", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
 
 # Создание словаря с данными по ученику из текущих данных информационных полей
 def get_pupil_dict():
-    temp_pupil_dict  =  {"id": "", "ФИО": "", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
-    temp_pupil_dict["id"] = id_textbox.get()
+    temp_pupil_dict  =  {"id": 0, "ФИО": "", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
+    temp_pupil_dict["id"] = int(id_textbox.get())
     temp_pupil_dict["ФИО"] = fio_textbox.get()
     temp_pupil_dict["Класс"] = class_textbox.get()
     temp_pupil_dict["Руководитель"] = class_boss_textbox.get()
@@ -129,19 +116,17 @@ def save_button_click(event):
     birthday_textbox.config(state="readonly")
     phone_textbox.config(state="readonly")
     pupil_listbox.config(state=NORMAL)
-    show_all_click()
+    show_all_click("")
 
 
 def add_button_click(event):
-    # new_id = pupil_add()
-    new_id = 6
+    new_id = pupil_add()
+    edit_button_click(event)
     textbox_clear_data()
     id_textbox.insert(0, new_id)
-    edit_button_click(event)
-
 
 def delete_button_click(event):
-    pupil_id_delete = id_textbox.get()
+    pupil_id_delete = int(id_textbox.get())
     pupil_delete(pupil_id_delete)
     show_all_click("")
 
@@ -160,7 +145,6 @@ def edit_button_click(event):
     birthday_textbox.config(state="normal")
     phone_textbox.config(state="normal")
     pupil_listbox.config(state=DISABLED)
-
 
 def search_button_click(event):
     edit_button.grid_remove()
@@ -181,7 +165,6 @@ def search_button_click(event):
 
 def find_button_click(event):
     filtered_list = request_filter_data_to_list(get_pupil_dict())
-    listbox_fill(filtered_list)
     edit_button.grid()
     add_button.grid()
     delete_button.grid()
@@ -196,8 +179,8 @@ def find_button_click(event):
     birthday_textbox.config(state="readonly")
     phone_textbox.config(state="readonly")
     pupil_listbox.config(state=NORMAL)
-    
-    
+    listbox_fill(filtered_list)
+
 def show_all_click(event):
     listbox_fill(request_all_data_to_list())
 
@@ -206,7 +189,7 @@ def listbox_fill(cur_pupil_dict):
     global pupil_listbox
     global pupil_id_list
     
-    pupil_listbox.delete(0,'end')
+    pupil_listbox.delete(0, 'end')
     pupil_id_list = []
     for i in range(len(cur_pupil_dict)):
         pupil_id_list.append(cur_pupil_dict[i]["id"])
@@ -230,7 +213,7 @@ def window_init():
     global search_button
     global find_button
     global all_button
-    
+
     common_font = ("Courier", 14)
     bold_font = ("Courier", 14, "bold")
     
@@ -249,8 +232,8 @@ def window_init():
     y = (sh - root_height) / 2
     
     # Задание размеров окна и его начального положения при выводе   
-    root.geometry(f"{root_width}x{root_height}+{int(x)}+{int(y)}") 
-    
+    root.geometry(f"{root_width}x{root_height}+{int(x)}+{int(y)}")
+
     # Создание подписей и текстовых полей для отображения данных по ученикам
     id_textbox = Entry(font=common_font, justify=LEFT)
     
@@ -341,6 +324,3 @@ def window_init():
    
     # Вывод всего, что отрисовали на окне на экран и начало отслеживания событий всех элементов
     root.mainloop()
-
-
-window_init()
