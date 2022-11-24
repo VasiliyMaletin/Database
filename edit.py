@@ -2,9 +2,10 @@ import json
 from logs import add_log
 # from interface import get_pupil_dict
 from find import request_all_data_to_list, request_pupil_data
-id = 2
-temp_pupil_dict = {"id": 2, "ФИО": "Петров Иван Иванович", "Класс": "10В", "Руководитель": "Сидоренко Арина Николаевна", "Успеваемость": "Хорошист", "Год рождения": "2011", "Телефон": "89174455584"}
-def save_data(id):
+# id = 2
+# temp_pupil_dict = {"id": 2, "ФИО": "Петров Иван Иванович", "Класс": "10В", "Руководитель": "Сидоренко Арина Николаевна", "Успеваемость": "Хорошист", "Год рождения": "2011", "Телефон": "89174455584"}
+
+def save_data(save_pupil_dict):
     pupil_dict = request_all_data_to_list()
     temp_pupil_dict = request_pupil_data(id)
     for index, key in enumerate(pupil_dict):
