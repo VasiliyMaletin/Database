@@ -37,7 +37,10 @@ pupil_filter_dict = {"id": "", "ФИО": "", "Класс": "", "Руководи
 # Создание словаря с данными по ученику из текущих данных информационных полей
 def get_pupil_dict():
     temp_pupil_dict  =  {"id": 0, "ФИО": "", "Класс": "", "Руководитель": "", "Успеваемость": "", "Год рождения": "", "Телефон": ""}
-    temp_pupil_dict["id"] = int(id_textbox.get())
+    try:
+        temp_pupil_dict["id"] = int(id_textbox.get())
+    except:
+        temp_pupil_dict["id"] = 0
     temp_pupil_dict["ФИО"] = fio_textbox.get()
     temp_pupil_dict["Класс"] = class_textbox.get()
     temp_pupil_dict["Руководитель"] = class_boss_textbox.get()

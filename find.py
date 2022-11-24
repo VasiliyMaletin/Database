@@ -3,6 +3,7 @@ import json
 def request_filter_data_to_list(find_pupil): # Поиск ученика по заданному словарю.
     with open('pupils.json', 'r', encoding='utf-8') as file:
         list_pupils = json.load(file)
+    find_pupil["id"] = ''
     pupil_list = []
     for i in list_pupils:
         check = 0
